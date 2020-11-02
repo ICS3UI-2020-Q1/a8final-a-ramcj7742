@@ -4,7 +4,15 @@ import java.awt.event.*;
 
 public class Main implements Runnable, ActionListener{
 
-  // Class Variables  
+  // Class Variables 
+  JPanel mainPanel;
+
+  JLabel countLabel;
+
+  JTextField display;
+
+  JButton resetButton;
+  JButton countDownButton;
   
 
 
@@ -18,6 +26,51 @@ public class Main implements Runnable, ActionListener{
     frame.setSize(800,600);
     // shows the window
     frame.setVisible(true);
+
+    //initalize main panel and disable layout helpers
+    mainPanel = new JPanel();
+    mainPanel.setLayout(null);
+
+    //create the count label 
+    countLabel = new JLabel("Counter:");
+
+    //set location and size of label 
+    countLabel.setBounds(80, 40, 150, 20);
+
+    //create the display
+    display = new JTextField("10");
+
+    //set size and location of display
+    display.setBounds(250, 30, 200, 30);
+
+    //disable the display
+    display.setEnabled(false);
+
+    //create the buttons
+    resetButton = new JButton("Reset");
+    countDownButton = new JButton("Count Down");
+
+    //sets location and size for buttons
+    resetButton.setBounds(80, 80, 175, 30);
+    countDownButton.setBounds(265, 80, 175, 30);
+
+    //adds action listener to buttons
+    resetButton.addActionListener(this);
+    countDownButton.addActionListener(this);
+
+    //sets action command to buttons
+    resetButton.setActionCommand("reset");
+    countDownButton.setActionCommand("countDown");
+
+    //puts everything on the main panel
+    mainPanel.add(countLabel);
+    mainPanel.add(countDownButton);
+    mainPanel.add(display);
+    mainPanel.add(resetButton);
+
+    //adds main panel to frame
+    frame.add(mainPanel);
+
  
     
 
@@ -27,6 +80,20 @@ public class Main implements Runnable, ActionListener{
   public void actionPerformed(ActionEvent e){
     // get the command from the action
     String command = e.getActionCommand();
+
+    //gets user button press
+    if(command.equals("countDown")){
+      //gets text currently on display
+      String displayText = display.getText();
+      int displayInt = Integer.parseInt(displayText);
+      //takes one away from the current # on screen, unless # is 0
+      if(displayInt > 0){
+        displayInt = displayInt - 1;
+        display.setText("" + displayInt);
+      }
+    }else if(command.equals("reset")){
+      display.setText("10");
+    }
 
   }
 
